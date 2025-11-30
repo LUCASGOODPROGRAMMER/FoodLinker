@@ -7,38 +7,56 @@
 <div class="container py-4">
     <NavBarRestaurante />
 
+    <section class="mb-4">
+        <div class="search-box">
+            <input type="text" placeholder="Pesquisar restaurante..." />
+            <button class="btn-search">Buscar</button>
+            <button class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2">
+                <i class="bi bi-plus-circle"></i>
+            </button>
+        </div>
+    </section>
+
     @* simulação de busca *@
-    <div id="container-gerenciar-restaurantes">
-        <h2 id="titulo-gerenciar">Gerenciar Restaurantes</h2>
+    <div class="container py-4">
 
-        @* banco de dados deve carregar os restaurantes registrados*@
-        @* btn-editar deve usar link dinâmico com o id *@
-        <ul id="lista-restaurantes">
-            <li class="card-restaurante">
-                <img src="https://i.pinimg.com/736x/9a/af/e3/9aafe38556e5d6a23d7749f2555c0368.jpg" alt="Restaurante A"
-                    class="img-restaurante" />
-                <div class="info-restaurante">
-                    <h3>Restaurante A</h3>
-                    <p>Rua Principal, 123</p>
-                </div>
-                <div class="acoes-restaurante">
-                    <button class="btn-deletar">Deletar</button>
-                    <button class="btn-editar">Editar</button>
-                </div>
-            </li>
+        <div class="row g-4">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="position-relative">
 
-            <li class="card-restaurante">
-                <img src="https://i.pinimg.com/736x/80/39/ce/8039ce6cc6040de86b42df8105a1a9a9.jpg" alt="Restaurante B"
-                    class="img-restaurante" />
-                <div class="info-restaurante">
-                    <h3>Restaurante B</h3>
-                    <p>Avenida Central, 456</p>
+                        <img class="card-img-top"
+                             src="https://i.pinimg.com/originals/43/1c/e5/431ce5d15aab86f66a91ec9a07c9114f.gif"
+                             alt="Restaurante" />
+
+                        <!-- faixa do título -->
+                        <div class="titulo-faixa">
+                            restaurante 1
+                        </div>
+
+                    </div>
+
+                    <div class="card-body text-center">
+
+                        <div class="btn-group w-100 btn-soft-group">
+                            <button class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+
+                            <button class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1">
+                                <i class="bi bi-eye"></i>
+                            </button>
+
+                            <button class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="acoes-restaurante">
-                    <button class="btn-deletar">Deletar</button>
-                    <button class="btn-editar">Editar</button>
-                </div>
-            </li>
-        </ul>
+            </div>
+        </div>
+
     </div>
+
 </div>

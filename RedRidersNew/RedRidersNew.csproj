@@ -14,10 +14,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Components\Pages\paginasRestaurante\SecaoCardapio\GerenciarCardapios.razor.css" />
+    <None Remove="Components\Pages\paginasRestaurante\SecaoCardapio\GerenciarPratos.razor.css" />
     <None Remove="Components\Pages\paginasRestaurante\SecaoCliente\MeusClientes.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Components\Pages\paginasRestaurante\SecaoCardapio\GerenciarCardapios.razor.css" />
+    <Content Include="Components\Pages\paginasRestaurante\SecaoCardapio\GerenciarPratos.razor.css" />
     <Content Include="Components\Pages\paginasRestaurante\SecaoCliente\MeusClientes.razor.css" />
   </ItemGroup>
 
