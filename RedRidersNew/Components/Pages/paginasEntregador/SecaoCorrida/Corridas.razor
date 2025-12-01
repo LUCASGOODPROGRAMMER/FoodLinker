@@ -6,4 +6,54 @@
 
 <div class="container py-4">
     <NavBarCorridas/>
+
+    <section class="mb-4">
+        <div class="search-box">
+            <input type="text" placeholder="Pesquisar corrida..." />
+            <button class="btn-search">Buscar</button>
+        </div>
+    </section>
+
+    @* aqui dentro deve ser buscado todas solicitações de entregas com o status aguardando entregador ou seila...*@
+    <section class="corridas-lista">
+
+        <!-- card de corrida -->
+        <div class="card shadow-sm border-0 mb-3 p-3">
+            <div class="row align-items-center g-3">
+
+                <!-- IMAGEM -->
+                <div class="col-12 col-md-3">
+                    <img src="https://i.pinimg.com/736x/e1/ff/03/e1ff03b0c942464ed8c66f03eedafc08.jpg"
+                         class="img-corrida rounded"
+                         alt="Item" />
+                </div>
+
+                <!-- INFORMAÇÕES -->
+                <div class="col-12 col-md-6">
+                    <h5 class="fw-semibold mb-2">Nome do item</h5>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Local de retirada:</strong> Rua Principal, 123
+                    </p>
+
+                    <p class="mb-1 text-secondary">
+                        <strong class="text-dark">Local de entrega:</strong> Av. Secundária, 987
+                    </p>
+
+                    <p class="mb-0 text-secondary">
+                        <strong class="text-dark">Preço do Frete:</strong> R$ 19.99
+                    </p>
+                </div>
+
+                <!-- AÇÃO -->
+                <div class="col-12 col-md-3 text-md-end text-center">
+                    <button class="btn btn-primary btn-search w-100 mt-2 mt-md-0">
+                        Aceitar corrida
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
 </div>
