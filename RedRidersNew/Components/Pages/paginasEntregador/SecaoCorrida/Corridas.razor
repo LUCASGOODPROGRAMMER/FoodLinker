@@ -8,11 +8,35 @@
     <NavBarCorridas/>
 
     <section class="mb-4">
-        <div class="search-box">
-            <input type="text" placeholder="Pesquisar corrida..." />
-            <button class="btn-search">Buscar</button>
+        <div class="card p-3 shadow-sm border-0 d-flex">
+
+            <div class="row g-3">
+
+                <!-- Tipo de filtro -->
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold">Filtrar por:</label>
+                    <select class="form-select">
+                        <option value="distancia" selected>Distância</option>
+                        <option value="frete">Frete</option>
+                        <option value="horario">Horário</option>
+                        <option value="tamanho">Tamanho</option>
+                    </select>
+                </div>
+
+                <!-- Ordem -->
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold">Ordem:</label>
+                    <select class="form-select">
+                        <option value="asc" selected>Crescente</option>
+                        <option value="desc">Decrescente</option>
+                    </select>
+                </div>
+
+            </div>
         </div>
     </section>
+
+
 
     @* aqui dentro deve ser buscado todas solicitações de entregas com o status parada ou seila...*@
     <section class="corridas-lista">
