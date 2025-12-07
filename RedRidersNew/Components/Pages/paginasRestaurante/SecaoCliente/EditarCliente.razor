@@ -1,4 +1,5 @@
-﻿@page "/restaurante/editar-cliente"
+﻿@page "/restaurante/editar-cliente/{id:int}"
+@using Microsoft.AspNetCore.Components
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @layout MainLayoutRestaurante
 
@@ -100,7 +101,7 @@
 
         <div class="mt-4 d-flex justify-content-between">
             <!-- Botão Cancelar -->
-            <button type="button" class="btn btn-soft-danger px-4">
+            <button type="button" class="btn btn-soft-danger px-4" @onclick="CancelarAlteracoes">
                 Cancelar
             </button>
 
@@ -108,7 +109,6 @@
             <button class="btn btn-soft-primary px-4">
                 Salvar Alterações
             </button>
-
         </div>
 
     </EditForm>
@@ -117,16 +117,46 @@
 
 @code {
 
+    [Parameter]
+    public int id { get; set; }
+
+    [Inject]
+    private NavigationManager Nav { get; set; }
+
     private Cliente cliente = new();
+
+    protected override void OnInitialized()
+    {
+        // TODO: buscar cliente por ID (mock de teste)
+        cliente = new Cliente
+        {
+            NomeCliente = "Cliente Exemplo " + id,
+            TelefoneCliente = "(00) 00000-0000",
+            CpfCliente = "000.000.000-00",
+            RgCliente = "0000000",
+            RotaImgCliente = "https://i.pinimg.com/originals/3b/d3/6f/3bd36fe648f68a8c8741cb7275ddf26a.gif",
+
+            CEPCliente = "00000-000",
+            RuaCliente = "Rua Exemplo",
+            NumeroCliente = "123",
+            ComplementoCliente = "Casa",
+            BairroCliente = "Centro",
+            CidadeCliente = "Cidade",
+            EstadoCliente = "UF",
+            PontoReferenciaCliente = "Próximo ao mercado"
+        };
+    }
 
     private void SalvarAlteracoes()
     {
+        // TODO: salvar no banco/API
 
+        Nav.NavigateTo($"/restaurante/detalhes-cliente/{id}");
     }
 
     private void CancelarAlteracoes()
     {
-        
+        Nav.NavigateTo($"/restaurante/detalhes-cliente/{id}");
     }
 
     public class Cliente
@@ -146,5 +176,4 @@
         public string EstadoCliente { get; set; }
         public string PontoReferenciaCliente { get; set; }
     }
-
 }

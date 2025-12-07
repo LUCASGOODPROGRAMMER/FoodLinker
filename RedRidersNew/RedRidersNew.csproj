@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Components\Pages\paginasRestaurante\SecaoCardapio\GerenciarCardapios.razor.css" />
     <Content Include="Components\Pages\paginasRestaurante\SecaoCliente\MeusClientes.razor.css" />
   </ItemGroup>
 
