@@ -4,109 +4,255 @@
 @rendermode InteractiveServer
 
 <div class="container py-4">
+    <NavBarEntregas />
 
-    <div class="row g-4">
+    <h2 class="mb-4">Solicitar Entrega</h2>
 
-        <!-- COLUNA ESQUERDA – FORMULÁRIO -->
-        <div class="col-12 col-lg-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="mb-3">Cadastrar novo item para entrega</h5>
+    <EditForm Model="@pedido" OnValidSubmit="EnviarSolicitacao">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
-                    <form class="row g-3">
+        <!-- Dados do Estabelecimento -->
 
-                        <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Nome do prato ou produto" />
-                        </div>
+        <div class="d-flex">
 
-                        <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Descrição breve do item" />
-                        </div>
+            <section class="card p-3 mb-4 shadow-sm col-9">
+                <h4 class="mb-3">Dados do Estabelecimento</h4>
 
-                        <div class="col-6">
-                            <input type="text" class="form-control" placeholder="Valor do frete (R$)" />
-                        </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Nome do Estabelecimento</label>
+                        <InputText class="form-control" @bind-Value="pedido.NomeEstabelecimento" />
+                    </div>
 
-                        <div class="col-6">
-                            <input type="number" class="form-control" placeholder="Quantidade disponível" />
-                        </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Número do Estabelecimento</label>
+                        <InputText class="form-control" @bind-Value="pedido.NumeroEstabelecimento" />
+                    </div>
 
-                        <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Endereço de entrega" />
-                        </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Horário de Retirada</label>
+                        <InputText class="form-control" @bind-Value="pedido.HorarioRetirada" />
+                    </div>
 
-                        <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Endereço de retirada" />
-                        </div>
-
-                        <div class="col-12 text-end">
-                            <button class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2">
-                                <i class="bi bi-plus-circle"></i>
-                                Adicionar item
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- COLUNA DIREITA – LISTAS -->
-        <div class="col-12 col-lg-8">
-
-            <!-- Produtos disponíveis -->
-            <h5 class="mb-3">Itens cadastrados no restaurante</h5>
-            <section class="row g-4">
-
-                <div class="col-6 col-md-4">
-                    <div class="card shadow-sm border-0 h-100">
-                        <img class="card-img-top img-square"
-                             src="https://i.pinimg.com/736x/3b/a2/48/3ba2487cd4b1317424142a8b799295ce.jpg" />
-                        <div class="card-body text-center">
-                            <p class="fw-semibold mb-2">Nome do prato</p>
-                            <button class="btn btn-outline-primary btn-sm w-100">Adicionar à entrega</button>
-                        </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Endereço de Retirada</label>
+                        <InputText class="form-control" @bind-Value="pedido.EnderecoRetirada" />
                     </div>
                 </div>
-
-                <div class="col-6 col-md-4">
-                    <div class="card shadow-sm border-0 h-100">
-                        <img class="card-img-top img-square"
-                             src="https://i.pinimg.com/736x/5b/35/3d/5b353d2c9fae2ba7940bba4108cccabc.jpg" />
-                        <div class="card-body text-center">
-                            <p class="fw-semibold mb-2">Nome do prato</p>
-                            <button class="btn btn-outline-primary btn-sm w-100">Adicionar à entrega</button>
-                        </div>
-                    </div>
-                </div>
-
             </section>
 
-            <!-- Produtos adicionados -->
-            <h5 class="mt-5 mb-3">Itens selecionados para a entrega</h5>
-            <section class="row g-4">
+            <aside class="menu-lateral card shadow-sm p-3 col-3 mb-4">
+                <h5 class="mb-3 text-center">Estabelecimentos</h5>
 
-                @foreach (var item in Enumerable.Range(1, 3))
-                {
-                    <div class="col-6 col-md-4">
-                        <div class="card shadow-sm border-0 h-100">
-                            <img class="card-img-top img-square"
-                                 src="https://i.pinimg.com/736x/97/33/c0/9733c0a81e46e63b338a0ad8d7d1f768.jpg" />
+                <div class="menu-scroll">
+                    @* aqui dentro vai ser carregado todos os nomes de restaurantes cadastrados, deve ser puxado o id tambêm da consulta, pq quando eu clicar no botão vai disparar o evento, que vai capturar o id no loop atual, e com base nesse id vai sobrescrever os inputs *@
+                    <button class="btn btn-outline-primary w-100 mb-2">Lanchonete</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Pizzaria</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Hamburgueria</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Sushi</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Padaria</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Mercado</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Farmácia</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Açaí</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Congelados</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Doceria</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Café</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Sorveteria</button>
+                </div>
+            </aside>
+        </div>
 
-                            <div class="card-body text-center">
-                                <p class="fw-semibold mb-2">Nome do prato</p>
-                                <button class="btn btn-outline-danger btn-sm w-100">Remover da entrega</button>
+        
+
+        <!-- Dados do Cliente que vai receber -->
+        <div class="d-flex">
+            <section class="card p-3 mb-4 shadow-sm col-9">
+                <h4 class="mb-3">Dados do Cliente Destinatário</h4>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Nome do Cliente</label>
+                        <InputText class="form-control" @bind-Value="pedido.NomeCliente" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Telefone</label>
+                        <InputText class="form-control" @bind-Value="pedido.TelefoneCliente" />
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Endereço de Entrega</label>
+                        <InputText class="form-control" @bind-Value="pedido.EnderecoEntrega" />
+                    </div>
+                </div>
+            </section>
+
+            <aside class="menu-lateral card shadow-sm p-3 col-3 mb-4">
+                <h5 class="mb-3 text-center">Clientes</h5>
+
+                <div class="menu-scroll">
+                    <button class="btn btn-outline-primary w-100 mb-2">Lucas</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Keynner</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Danilo</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Davi</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Samuel</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Jhuli</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Ana</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Tainara</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Kaylla</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Manu</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Geovana</button>
+                    <button class="btn btn-outline-primary w-100 mb-2">Thiago</button>
+                </div>
+            </aside>
+        </div>
+
+
+
+
+        <!-- Informações da Entrega -->
+        <section class="card p-3 mb-4 shadow-sm">
+            <h4 class="mb-3">Detalhes da Entrega</h4>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Distância (km)</label>
+                    <InputNumber class="form-control" @bind-Value="pedido.DistanciaKm" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Valor do Frete (R$)</label>
+                    <InputNumber class="form-control" @bind-Value="pedido.ValorFrete" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Tempo Estimado (min)</label>
+                    <InputNumber class="form-control" @bind-Value="pedido.TempoEstimado" />
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Observações (opcional)</label>
+                    <InputTextArea class="form-control" @bind-Value="pedido.Observacoes" />
+                </div>
+            </div>
+        </section>
+
+        <!-- Itens cadastrados anteriormente-->
+        <section class="card p-3 mb-4 shadow-sm">
+            <h4 class="mb-3">Adicionar Itens na Entrega</h4>
+            
+            <section class="mb-1">
+                <div class="search-box">
+                    <input type="text" placeholder="Nome do item..." />
+                    <button class="btn-search">Buscar</button>
+                </div>
+            </section>
+
+            <div class="row g-4 menu-scroll menu-scroll-itens mt-1">
+                @* a partir da qui vai ser carregado todos os meus pratos registrados na seguinte estrutura como base:*@
+
+                <!-- card 1 -->
+                <div class="col-6 col-sm-6 col-md-5 col-lg-3">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="position-relative">
+
+                            <img class="card-img-top"
+                                 src="https://i.pinimg.com/originals/d7/5c/ed/d75cedb1c4b89b6cc78341e24bfa4f03.gif"
+                                 alt="Prato" />
+
+                            <!-- faixa do título -->
+                            <div class="titulo-faixa">
+                                Prato 1
                             </div>
+
+                        </div>
+
+                        <div class="card-body text-center">
+
+                            <div class="btn-group w-50 btn-soft-group">
+                                @* ao clicar nesse botão o prato do loop atual deve ser adicionado na seção la embaixo de itens adicionados a entrega*@
+       
+                                <button class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1">
+                                    <i class="bi bi-plus-square-fill"></i>
+                                </button>
+                            </div>
+
                         </div>
                     </div>
-                }
 
-            </section>
+                </div>
+            </div>
+        </section>
 
-            <div class="text-end mt-4">
-                <button class="btn btn-success px-4 py-2">Confirmar e enviar pedido</button>
+        <!-- itens adicionados para a entrega-->
+        <!-- coloque o id de todos os itens adicionados dentro de um array temporário -->
+        <section class="card p-3 mb-4 shadow-sm">
+            <h3 class="mb-3">Itens adicionados</h3>
+
+            @* item 1 *@
+            <div class="row g-2">
+                <div class="col-md-12 border-bottom pb-2">
+
+                    <div class="d-flex align-items-center justify-content-between g-3">
+
+                        <!-- Nome -->
+                        <h5 class="mb-0 fw-bold">Nome do item</h5>
+
+                        <!-- Tamanho e Preço -->
+                        <div class="d-flex text-end align-items-end gap-2">
+                            <span class="text-muted small">litros / peso / tamanho</span>
+                            <span class="fw-semibold">R$ 00,00</span>
+                            <div class="d-flex flex-column gap-1">
+                                <button class="btn btn-outline-primary d-flex align-items-center justify-content-center gap-1">
+                                    <i class="bi bi-info-square-fill"></i>
+                                </button>
+                                <button class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1">
+                                    <i class="bi bi-x-square-fill"></i>
+                                </button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
 
-        </div>
-    </div>
+            <div class="d-flex justify-content-between mt-3">
+                <h4 class="m-0">Valor Total</h4>
+                <h4 class="m-0 fw-bold">R$ 00,00</h4>
+            </div>
+        </section>
 
+
+        <div class="text-end">
+            <button class="btn btn-primary px-4">Enviar Solicitação</button>
+        </div>
+    </EditForm>
 </div>
+
+@code {
+    private PedidoEntrega pedido = new();
+
+    private void EnviarSolicitacao()
+    {
+        // lógica futura de enviar solicitação
+    }
+
+    public class PedidoEntrega
+    {
+        public string NomeEstabelecimento { get; set; }
+        public string NumeroEstabelecimento { get; set; }
+        public string EnderecoRetirada { get; set; }
+        public string HorarioRetirada { get; set; }
+
+        public string NomeCliente { get; set; }
+        public string TelefoneCliente { get; set; }
+        public string EnderecoEntrega { get; set; }
+
+        public double DistanciaKm { get; set; }
+        public double ValorFrete { get; set; }
+        public int TempoEstimado { get; set; }
+
+        public string Observacoes { get; set; }
+    }
+}

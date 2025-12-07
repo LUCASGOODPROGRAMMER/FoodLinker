@@ -19,7 +19,7 @@
                         <option value="distancia" selected>Distância</option>
                         <option value="frete">Frete</option>
                         <option value="horario">Horário</option>
-                        <option value="tamanho">Tamanho</option>
+                        <option value="quantidade">Quantidade de Itens</option>
                     </select>
                 </div>
 
@@ -38,21 +38,21 @@
 
 
 
-    @* aqui dentro deve ser buscado todas solicitações de entregas com o status parada ou seila...*@
+    @* aqui dentro deve ser buscado todas solicitações de entregas não aceitas...*@
     <section class="corridas-lista">
 
         <!-- card de corrida -->
         <div class="card shadow-sm border-0 mb-3 p-3">
             <div class="row align-items-center g-3">
 
-                <!-- IMAGEM -->
+                <!-- imagem -->
                 <div class="col-12 col-md-3">
                     <img src="https://i.pinimg.com/736x/e1/ff/03/e1ff03b0c942464ed8c66f03eedafc08.jpg"
                          class="img-corrida rounded"
                          alt="Item" />
                 </div>
 
-                <!-- INFORMAÇÕES -->
+                <!-- infomações -->
                 <div class="col-12 col-md-6">
                     <h5 class="fw-semibold mb-2">Nome do pedido</h5>
 
@@ -74,7 +74,7 @@
                     </p>
 
                     <p class="mb-1 text-secondary">
-                        <strong class="text-dark">Tamanho do Pedido:</strong> médio
+                        <strong class="text-dark">Itens do Pedido:</strong> Pizza, coca cola etc...
                     </p>
 
                     <p class="mb-1 text-secondary">
@@ -83,7 +83,7 @@
 
                 </div>
 
-                <!-- AÇÃO -->
+                <!-- ação -->
                 <div class="col-12 col-md-3 text-md-end text-center">
                     @* ao clicar em aceitar corrida o status deve mudar para "marcada"*@
                     <button class="btn btn-primary btn-search w-100 mt-2 mt-md-0">
