@@ -1,0 +1,42 @@
+﻿@page "/entregador/detalhes-veiculo/{Id:int}"
+@using RedRidersNew.Components.Layout.LayoutEntregador
+@layout MainLayoutEntregador
+
+<PageTitle>Detalhes do Veículo</PageTitle>
+
+<div class="container py-4">
+
+    <NavBarVeiculos />
+
+    <div class="card shadow-sm p-4">
+        <h4 class="mb-3">@veiculo.Nome</h4>
+        <p class="text-muted">@veiculo.Modelo</p>
+        <img src="@veiculo.Imagem" alt="@veiculo.Nome" class="img-fluid rounded mb-3" />
+
+        <p>Aqui você pode colocar mais detalhes do veículo, como placa, ano, cor, etc.</p>
+    </div>
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private VeiculoModel veiculo = new();
+
+    protected override void OnInitialized()
+    {
+        veiculo = new VeiculoModel
+        {
+            Id = Id,
+            Nome = $"Veículo {Id}",
+            Modelo = "Modelo X",
+            Imagem = "https://via.placeholder.com/300x180"
+        };
+    }
+
+    public class VeiculoModel
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string Modelo { get; set; }
+        public string Imagem { get; set; }
+    }
+}

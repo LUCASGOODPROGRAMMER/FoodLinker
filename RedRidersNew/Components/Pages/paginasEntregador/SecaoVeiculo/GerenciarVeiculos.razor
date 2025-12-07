@@ -1,0 +1,102 @@
+﻿@page "/entregador/gerenciar-veiculos"
+@using RedRidersNew.Components.Layout.LayoutEntregador
+@inject NavigationManager Nav
+@layout MainLayoutEntregador
+
+<PageTitle>Gerenciar Veículos</PageTitle>
+
+<div class="container py-4">
+
+    <NavBarVeiculos />
+
+    <section class="mb-4">
+        <div class="search-box d-flex gap-2">
+            <input type="text" class="form-control" placeholder="Pesquisar veículos..." @bind="searchTerm" />
+            <button class="btn btn-search btn-secondary" @onclick="Buscar">Buscar</button>
+
+            <NavLink href="/entregador/cadastro-veiculo"
+                     class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2">
+                <i class="bi bi-plus-circle"></i>
+            </NavLink>
+        </div>
+    </section>
+
+    <div class="row g-4">
+        @foreach (var veiculo in Veiculos)
+        {
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="card shadow-sm border-0 h-100">
+                    <img class="card-img-top" src="@veiculo.Imagem" alt="@veiculo.Nome" />
+                    <div class="card-body text-center">
+                        <h5 class="fw-bold">@veiculo.Nome</h5>
+                        <p class="text-muted">@veiculo.Modelo</p>
+
+                        <div class="btn-group w-100 mt-2">
+                            <NavLink href=$"/entregador/editar-veiculo/{veiculo.Id}"
+                                     class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1">
+                                <i class="bi bi-pencil-square"></i>
+                            </NavLink>
+
+                            <NavLink href=$"/entregador/detalhes-veiculo/{veiculo.Id}"
+                                     class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1">
+                                <i class="bi bi-eye"></i>
+                            </NavLink>
+
+                            <button class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1"
+                                    @onclick="() => Remover(veiculo.Id)">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private string searchTerm = "";
+    private List<VeiculoModel> Veiculos { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        CarregarVeiculos();
+    }
+
+    private void CarregarVeiculos()
+    {
+        Veiculos = new List<VeiculoModel>
+        {
+            new() { Id = 1, Nome = "Moto 125cc", Modelo = "Honda CG", Imagem = "https://via.placeholder.com/200x120" },
+            new() { Id = 2, Nome = "Carro Popular", Modelo = "Fiat Uno", Imagem = "https://via.placeholder.com/200x120" },
+        };
+    }
+
+    private void Buscar()
+    {
+        if (string.IsNullOrWhiteSpace(searchTerm))
+        {
+            CarregarVeiculos();
+            return;
+        }
+
+        Veiculos = Veiculos
+            .Where(v => v.Nome.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                        v.Modelo.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+
+    private void Remover(int id)
+    {
+        var item = Veiculos.FirstOrDefault(x => x.Id == id);
+        if (item != null) Veiculos.Remove(item);
+    }
+
+    public class VeiculoModel
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string Modelo { get; set; }
+        public string Imagem { get; set; }
+    }
+}

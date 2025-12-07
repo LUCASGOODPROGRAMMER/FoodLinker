@@ -1,0 +1,54 @@
+﻿@page "/entregador/cadastro-veiculo"
+@using RedRidersNew.Components.Layout.LayoutEntregador
+@layout MainLayoutEntregador
+
+<PageTitle>Cadastrar Veículo</PageTitle>
+
+<div class="container py-4">
+
+    <NavBarVeiculos />
+
+    <div class="card shadow-sm p-4">
+        <h4 class="mb-3">Cadastrar Veículo</h4>
+
+        <EditForm Model="@veiculo" OnValidSubmit="Salvar">
+            <DataAnnotationsValidator />
+
+            <div class="mb-3">
+                <label class="form-label">Nome</label>
+                <InputText class="form-control" @bind-Value="veiculo.Nome" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Modelo</label>
+                <InputText class="form-control" @bind-Value="veiculo.Modelo" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Imagem (URL)</label>
+                <InputText class="form-control" @bind-Value="veiculo.Imagem" />
+            </div>
+
+            <button class="btn btn-primary px-4">Salvar</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private VeiculoModel veiculo = new();
+
+    private void Salvar()
+    {
+        Console.WriteLine($"Veículo {veiculo.Nome} cadastrado!");
+        // Aqui você pode redirecionar para o gerenciar-veiculos:
+        // Nav.NavigateTo("/restaurante/gerenciar-veiculos");
+    }
+
+    public class VeiculoModel
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string Modelo { get; set; }
+        public string Imagem { get; set; }
+    }
+}

@@ -1,0 +1,65 @@
+﻿@page "/entregador/editar-veiculo/{Id:int}"
+@using RedRidersNew.Components.Layout.LayoutEntregador
+@layout MainLayoutEntregador
+
+<PageTitle>Editar Veículo</PageTitle>
+
+<div class="container py-4">
+
+    <NavBarVeiculos />
+
+    <div class="card shadow-sm p-4">
+        <h4 class="mb-3">Editar Veículo</h4>
+
+        <EditForm Model="@veiculo" OnValidSubmit="SalvarAlteracoes">
+            <DataAnnotationsValidator />
+
+            <div class="mb-3">
+                <label class="form-label">Nome</label>
+                <InputText class="form-control" @bind-Value="veiculo.Nome" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Modelo</label>
+                <InputText class="form-control" @bind-Value="veiculo.Modelo" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Imagem (URL)</label>
+                <InputText class="form-control" @bind-Value="veiculo.Imagem" />
+            </div>
+
+            <button class="btn btn-primary px-4">Salvar Alterações</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private VeiculoModel veiculo = new();
+
+    protected override void OnInitialized()
+    {
+        // Simulação de carregamento pelo ID
+        veiculo = new VeiculoModel
+        {
+            Id = Id,
+            Nome = $"Veículo {Id}",
+            Modelo = "Modelo X",
+            Imagem = "https://via.placeholder.com/200x120"
+        };
+    }
+
+    private void SalvarAlteracoes()
+    {
+        Console.WriteLine($"Veículo {veiculo.Id} atualizado!");
+    }
+
+    public class VeiculoModel
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string Modelo { get; set; }
+        public string Imagem { get; set; }
+    }
+}
