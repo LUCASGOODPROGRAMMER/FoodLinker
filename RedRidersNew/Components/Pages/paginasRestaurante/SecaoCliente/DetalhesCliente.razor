@@ -1,4 +1,4 @@
-﻿@page "/restaurante/detalhes-cliente"
+﻿@page "/restaurante/detalhes-cliente/{id:int}"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @layout MainLayoutRestaurante
 
@@ -97,23 +97,33 @@
 
 @code {
 
-    private Cliente cliente = new()
-    {
-        NomeCliente = "Nome Exemplo",
-        TelefoneCliente = "(00) 00000-0000",
-        CpfCliente = "000.000.000-00",
-        RgCliente = "0000000",
-        RotaImgCliente = "https://i.pinimg.com/originals/3b/d3/6f/3bd36fe648f68a8c8741cb7275ddf26a.gif",
+    [Parameter]
+    public int id { get; set; }
 
-        CEPCliente = "00000-000",
-        RuaCliente = "Rua Exemplo",
-        NumeroCliente = "123",
-        ComplementoCliente = "Casa",
-        BairroCliente = "Centro",
-        CidadeCliente = "Cidade",
-        EstadoCliente = "UF",
-        PontoReferenciaCliente = "Próximo ao mercado"
-    };
+    private Cliente cliente = new();
+
+    protected override void OnInitialized()
+    {
+        // TODO: buscar cliente pelo id no banco/API
+        // Exemplo temporário:
+        cliente = new Cliente
+        {
+            NomeCliente = "Nome Exemplo",
+            TelefoneCliente = "(00) 00000-0000",
+            CpfCliente = "000.000.000-00",
+            RgCliente = "0000000",
+            RotaImgCliente = "https://i.pinimg.com/originals/3b/d3/6f/3bd36fe648f68a8c8741cb7275ddf26a.gif",
+
+            CEPCliente = "00000-000",
+            RuaCliente = "Rua Exemplo",
+            NumeroCliente = "123",
+            ComplementoCliente = "Casa",
+            BairroCliente = "Centro",
+            CidadeCliente = "Cidade",
+            EstadoCliente = "UF",
+            PontoReferenciaCliente = "Próximo ao mercado"
+        };
+    }
 
     public class Cliente
     {
