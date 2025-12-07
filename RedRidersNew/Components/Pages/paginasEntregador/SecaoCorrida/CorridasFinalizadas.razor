@@ -1,0 +1,76 @@
+﻿@page "/entregador/corridas-feitas"
+@using RedRidersNew.Components.Layout.LayoutEntregador
+@layout MainLayoutEntregador
+
+<PageTitle>Corridas Feitas</PageTitle>
+
+<div class="container py-4">
+    <NavBarCorridas />
+
+    <div class="cliente-card">
+        <table class="tabela-clientes">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nome do Pedido</th>
+                    <th>Telefone do Cliente</th>
+                    <th>Endereço de Entrega</th>
+                    <th>Distância</th>
+                    <th>Frete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (CorridasFeitas.Any())
+                {
+                    @foreach (var c in CorridasFeitas)
+                    {
+                        <tr>
+                            <td>
+                                <img src="@c.Imagem" alt="Foto do pedido" class="img-tabela" />
+                            </td>
+                            <td>@c.NomePedido</td>
+                            <td>
+                                <a href="tel:@c.TelefoneCliente">@c.TelefoneCliente</a>
+                            </td>
+                            <td>@c.Entrega</td>
+                            <td>@c.Distancia km</td>
+                            <td>R$ @c.Frete</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-3">
+                            Nenhuma corrida feita encontrada...
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    private List<CorridaModel> CorridasFeitas = new();
+
+    protected override void OnInitialized()
+    {
+        // Exemplo de dados
+        CorridasFeitas = new List<CorridaModel>
+        {
+            new() { NomePedido="Pedido 1", Imagem="https://i.pinimg.com/736x/10/f8/26/10f826d1cd5a216452c9e25f6d9b594f.jpg", TelefoneCliente="(xx)-xxxxx-xxxx", Entrega="Bairro X", Distancia=3.2, Frete=19.99 },
+            new() { NomePedido="Pedido 2", Imagem="https://i.pinimg.com/736x/10/f8/26/10f826d1cd5a216452c9e25f6d9b594f.jpg", TelefoneCliente="(xx)-xxxxx-xxxx", Entrega="Bairro Y", Distancia=5.0, Frete=25.00 }
+        };
+    }
+
+    public class CorridaModel
+    {
+        public string NomePedido { get; set; }
+        public string Imagem { get; set; }
+        public string TelefoneCliente { get; set; }
+        public string Entrega { get; set; }
+        public double Distancia { get; set; }
+        public double Frete { get; set; }
+    }
+}

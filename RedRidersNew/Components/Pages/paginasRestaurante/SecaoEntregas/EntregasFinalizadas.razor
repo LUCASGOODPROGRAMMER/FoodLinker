@@ -1,0 +1,161 @@
+﻿@page "/restaurante/entregas-finalizadas"
+@using RedRidersNew.Components.Layout.LayoutRestaurante
+@layout MainLayoutRestaurante
+
+<PageTitle>Pedidos Finalizados</PageTitle>
+
+<div class="container py-4">
+    <NavBarEntregas />
+
+    <!-- Filtros -->
+    <section class="mb-4">
+        <div class="card p-3 shadow-sm border-0 d-flex">
+            <div class="row g-3">
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold">Filtrar por:</label>
+                    <select class="form-select" @bind="Filtro">
+                        <option value="distancia">Distância</option>
+                        <option value="frete">Frete</option>
+                        <option value="horario">Horário</option>
+                        <option value="quantidade">Quantidade de Itens</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold">Ordem:</label>
+                    <select class="form-select" @bind="Ordem">
+                        <option value="asc">Crescente</option>
+                        <option value="desc">Decrescente</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabela de pedidos finalizados -->
+    <section class="corridas-lista">
+        @if (PedidosFinalizados?.Any() == true)
+        {
+            <table class="table table-hover shadow-sm align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Imagem</th>
+                        <th>Pedido</th>
+                        <th>Retirada</th>
+                        <th>Entrega</th>
+                        <th>Horário</th>
+                        <th>Frete</th>
+                        <th>Itens</th>
+                        <th>Distância</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in PedidosFinalizadosFiltrados)
+                    {
+                        <tr class="table-success">
+                            <td>
+                                <img src="@p.ImagemUrl" class="img-thumbnail" style="width:80px;height:80px; object-fit:cover;" />
+                            </td>
+                            <td>@p.NomePedido</td>
+                            <td>@p.Retirada</td>
+                            <td>@p.EntregaPreview</td>
+                            <td>@p.HorarioRetirada.ToString("HH:mm")</td>
+                            <td>R$ @p.FreteTotal</td>
+                            <td>@p.ItensPedido</td>
+                            <td>@p.DistanciaKm km</td>
+                            <td>
+                                <span class="badge badge-marcada">
+                                    @p.Status
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-muted">Nenhum pedido finalizado.</p>
+        }
+    </section>
+</div>
+
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #e6f4ea; /* hover suave verde */
+        transition: background-color 0.2s;
+    }
+
+    .badge-marcada {
+        background-color: #28a745; /* verde */
+        color: #fff;
+    }
+</style>
+
+@code {
+    private string Filtro { get; set; } = "distancia";
+    private string Ordem { get; set; } = "asc";
+
+    private List<SolicitacaoEntrega> PedidosFinalizados { get; set; } = new();
+    private IEnumerable<SolicitacaoEntrega> PedidosFinalizadosFiltrados => FiltrarPedidosFinalizados();
+
+    protected override void OnInitialized()
+    {
+        // Simulação de pedidos finalizados
+        PedidosFinalizados = new List<SolicitacaoEntrega>
+        {
+            new SolicitacaoEntrega
+            {
+                NomePedido = "Pedido 3",
+                Retirada = "Rua das Flores, 789",
+                EntregaPreview = "Bairro Amazonas...",
+                HorarioRetirada = DateTime.Now.AddMinutes(-90),
+                FreteTotal = 30.00m,
+                ItensPedido = "Sushi, Suco",
+                DistanciaKm = 4.5,
+                ImagemUrl = "https://i.pinimg.com/736x/10/f8/26/10f826d1cd5a216452c9e25f6d9b594f.jpg",
+                Status = "finalizado"
+            },
+            new SolicitacaoEntrega
+            {
+                NomePedido = "Pedido 4",
+                Retirada = "Av. Central, 101",
+                EntregaPreview = "Bairro Jardim...",
+                HorarioRetirada = DateTime.Now.AddMinutes(-120),
+                FreteTotal = 22.50m,
+                ItensPedido = "Hambúrguer, Batata Frita",
+                DistanciaKm = 3.8,
+                ImagemUrl = "https://i.pinimg.com/736x/10/f8/26/10f826d1cd5a216452c9e25f6d9b594f.jpg",
+                Status = "finalizado"
+            }
+        };
+    }
+
+    private IEnumerable<SolicitacaoEntrega> FiltrarPedidosFinalizados()
+    {
+        IEnumerable<SolicitacaoEntrega> query = PedidosFinalizados.Where(p => p.Status == "finalizado");
+
+        query = Filtro switch
+        {
+            "frete" => Ordem == "asc" ? query.OrderBy(s => s.FreteTotal) : query.OrderByDescending(s => s.FreteTotal),
+            "horario" => Ordem == "asc" ? query.OrderBy(s => s.HorarioRetirada) : query.OrderByDescending(s => s.HorarioRetirada),
+            "quantidade" => Ordem == "asc" ? query.OrderBy(s => s.ItensPedido.Split(',').Length) : query.OrderByDescending(s => s.ItensPedido.Split(',').Length),
+            _ => Ordem == "asc" ? query.OrderBy(s => s.DistanciaKm) : query.OrderByDescending(s => s.DistanciaKm)
+        };
+
+        return query;
+    }
+
+    public class SolicitacaoEntrega
+    {
+        public string NomePedido { get; set; }
+        public string Retirada { get; set; }
+        public string EntregaPreview { get; set; }
+        public DateTime HorarioRetirada { get; set; }
+        public decimal FreteTotal { get; set; }
+        public string ItensPedido { get; set; }
+        public double DistanciaKm { get; set; }
+        public string ImagemUrl { get; set; }
+        public string Status { get; set; }
+    }
+}

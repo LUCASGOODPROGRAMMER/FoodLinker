@@ -4,10 +4,10 @@
     object-fit: cover;
 }
 
-.card {
-    background: linear-gradient(90deg, #ede7f6, #f3e5f5);
-}
-
 .btn.btn-primary {
    background-color: #4b4bb7;
+}
+
+.card {
+    background: linear-gradient(90deg, #ede7f6, #f3e5f5);
 }

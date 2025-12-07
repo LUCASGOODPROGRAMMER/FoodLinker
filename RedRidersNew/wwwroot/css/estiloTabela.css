@@ -1,0 +1,64 @@
+﻿
+.cliente-card {
+    display: flex;
+    gap: 22px;
+    padding: 20px;
+    border: 1px solid #dcdfff;
+    border-radius: 16px;
+    background: #fff;
+    align-items: center;
+}
+
+    /* Foto */
+    .cliente-card img {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        object-fit: cover;
+        border: 2px solid #e6e8ff;
+    }
+
+
+
+.tabela-clientes {
+    width: 100%;
+    border-collapse: collapse;
+    color: #182848;
+    font-size: 0.95rem;
+}
+
+    /* Cabeçalho */
+    .tabela-clientes thead th {
+        text-align: left;
+        font-weight: 600;
+        border-bottom: 2px solid #d0d4ff;
+        padding: 12px 24px; /* 12px vertical | 24px horizontal */
+    }
+
+    /* Linhas */
+    .tabela-clientes tbody td {
+        padding: 14px 24px;
+        border-bottom: 1px solid #e3e6ff;
+    }
+
+    /* Última linha sem borda */
+    .tabela-clientes tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Hover suave */
+    .tabela-clientes tbody tr:hover {
+        background: #f5f6ff;
+        transition: 0.2s;
+    }
+
+    /* Links de telefone */
+    .tabela-clientes a {
+        color: #4b4bb7;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+        .tabela-clientes a:hover {
+            text-decoration: underline;
+        }

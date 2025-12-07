@@ -1,0 +1,204 @@
+﻿@page "/restaurante/entregas-solicitadas"
+@using RedRidersNew.Components.Layout.LayoutRestaurante
+@layout MainLayoutRestaurante
+
+<PageTitle>Entregas Solicitadas</PageTitle>
+
+<div class="container py-4">
+    <NavBarEntregas />
+
+    <!-- Filtros -->
+    <section class="mb-4">
+        <div class="card p-3 shadow-sm border-0 d-flex">
+            <div class="row g-3">
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold">Filtrar por:</label>
+                    <select class="form-select" @bind="Filtro">
+                        <option value="distancia">Distância</option>
+                        <option value="frete">Frete</option>
+                        <option value="horario">Horário</option>
+                        <option value="quantidade">Quantidade de Itens</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold">Ordem:</label>
+                    <select class="form-select" @bind="Ordem">
+                        <option value="asc">Crescente</option>
+                        <option value="desc">Decrescente</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabela de entregas -->
+    <section class="corridas-lista">
+        @if (Solicitacoes?.Any() == true)
+        {
+            <table class="table table-hover shadow-sm align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Imagem</th>
+                        <th>Pedido</th>
+                        <th>Retirada</th>
+                        <th>Entrega</th>
+                        <th>Horário</th>
+                        <th>Frete</th>
+                        <th>Itens</th>
+                        <th>Distância</th>
+                        <th>Status</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var s in SolicitacoesFiltradas)
+                    {
+                        <tr class="@GetRowClass(s.Status)">
+                            <td>
+                                <img src="@s.ImagemUrl" class="img-thumbnail" style="width:80px;height:80px; object-fit:cover;" />
+                            </td>
+                            <td>@s.NomePedido</td>
+                            <td>@s.Retirada</td>
+                            <td>@s.EntregaPreview</td>
+                            <td>@s.HorarioRetirada.ToString("HH:mm")</td>
+                            <td>R$ @s.FreteTotal</td>
+                            <td>@s.ItensPedido</td>
+                            <td>@s.DistanciaKm km</td>
+                            <td>
+                                <span class="badge @GetBadgeClass(s.Status)">
+                                    @s.Status
+                                </span>
+                            </td>
+                            <td>
+                                @if (s.Status != "marcada")
+                                {
+                                    <button class="btn btn-primary btn-sm" @onclick="() => AceitarSolicitacao(s)">
+                                        Cancelar
+                                    </button>
+                                }
+                                else
+                                {
+                                    <span class="text-success fw-semibold">Runner a caminho</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-muted">Nenhuma solicitação disponível.</p>
+        }
+    </section>
+</div>
+
+<style>
+    /* Linha colorida ao passar o mouse */
+    .table-hover tbody tr:hover {
+        background-color: #f1f5f9;
+        transition: background-color 0.2s;
+    }
+
+    /* Badge personalizada */
+    .badge-parada {
+        background-color: #6c757d; /* cinza */
+    }
+
+    .badge-pendente {
+        background-color: #ffc107; /* amarelo */
+        color: #212529;
+    }
+
+    .badge-marcada {
+        background-color: #28a745; /* verde */
+    }
+</style>
+
+@code {
+    private string Filtro { get; set; } = "distancia";
+    private string Ordem { get; set; } = "asc";
+
+    private List<SolicitacaoEntrega> Solicitacoes { get; set; } = new();
+    private IEnumerable<SolicitacaoEntrega> SolicitacoesFiltradas => FiltrarSolicitacoes();
+
+    protected override void OnInitialized()
+    {
+        Solicitacoes = new List<SolicitacaoEntrega>
+        {
+            new SolicitacaoEntrega
+            {
+                NomePedido = "Pedido 1",
+                Retirada = "Rua Principal, 123",
+                EntregaPreview = "Bairro Tucunaré...",
+                HorarioRetirada = DateTime.Now.AddMinutes(30),
+                FreteTotal = 19.99m,
+                ItensPedido = "Pizza, Coca Cola",
+                DistanciaKm = 3.2,
+                ImagemUrl = "https://i.pinimg.com/736x/10/f8/26/10f826d1cd5a216452c9e25f6d9b594f.jpg",
+                Status = "parada"
+            },
+            new SolicitacaoEntrega
+            {
+                NomePedido = "Pedido 2",
+                Retirada = "Av. Central, 456",
+                EntregaPreview = "Bairro Tucunaré...",
+                HorarioRetirada = DateTime.Now.AddMinutes(60),
+                FreteTotal = 25.50m,
+                ItensPedido = "Hambúrguer, Refrigerante",
+                DistanciaKm = 5.1,
+                ImagemUrl = "https://i.pinimg.com/736x/10/f8/26/10f826d1cd5a216452c9e25f6d9b594f.jpg",
+                Status = "pendente"
+            }
+        };
+    }
+
+    private IEnumerable<SolicitacaoEntrega> FiltrarSolicitacoes()
+    {
+        IEnumerable<SolicitacaoEntrega> query = Solicitacoes.Where(s => s.Status == "parada" || s.Status == "pendente");
+
+        query = Filtro switch
+        {
+            "frete" => Ordem == "asc" ? query.OrderBy(s => s.FreteTotal) : query.OrderByDescending(s => s.FreteTotal),
+            "horario" => Ordem == "asc" ? query.OrderBy(s => s.HorarioRetirada) : query.OrderByDescending(s => s.HorarioRetirada),
+            "quantidade" => Ordem == "asc" ? query.OrderBy(s => s.ItensPedido.Split(',').Length) : query.OrderByDescending(s => s.ItensPedido.Split(',').Length),
+            _ => Ordem == "asc" ? query.OrderBy(s => s.DistanciaKm) : query.OrderByDescending(s => s.DistanciaKm)
+        };
+
+        return query;
+    }
+
+    private void AceitarSolicitacao(SolicitacaoEntrega s)
+    {
+        s.Status = "marcada";
+    }
+
+    private string GetBadgeClass(string status) => status switch
+    {
+        "parada" => "badge badge-parada",
+        "pendente" => "badge badge-pendente",
+        "marcada" => "badge badge-marcada",
+        _ => "badge bg-secondary"
+    };
+
+    private string GetRowClass(string status) => status switch
+    {
+        "parada" => "table-secondary",
+        "pendente" => "table-warning",
+        "marcada" => "table-success",
+        _ => ""
+    };
+
+    public class SolicitacaoEntrega
+    {
+        public string NomePedido { get; set; }
+        public string Retirada { get; set; }
+        public string EntregaPreview { get; set; }
+        public DateTime HorarioRetirada { get; set; }
+        public decimal FreteTotal { get; set; }
+        public string ItensPedido { get; set; }
+        public double DistanciaKm { get; set; }
+        public string ImagemUrl { get; set; }
+        public string Status { get; set; }
+    }
+}
