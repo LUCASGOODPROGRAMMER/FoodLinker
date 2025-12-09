@@ -12,10 +12,9 @@
     <section class="mb-4">
         <div class="search-box">
             <input type="text"
-                   placeholder="Pesquisar cliente..."
-                   @bind="filtro" />
+                   placeholder="Pesquisar cliente..." />
 
-            <button class="btn-search" @onclick="AplicarFiltro">Buscar</button>
+            <button class="btn-search">Buscar</button>
 
             <NavLink href="restaurante/cadastrar-cliente"
                      class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2">
@@ -24,122 +23,56 @@
         </div>
     </section>
 
+    <!-- Grid de clientes (exemplo estático) -->
     <div class="row g-4">
 
-        @if (clientesFiltrados.Any())
-        {
-            @foreach (var cli in clientesFiltrados)
-            {
-                <div class="col-10 col-sm-8 col-md-4 col-lg-3">
-                    <div class="card shadow-sm border-0 h-100">
-                        <div class="position-relative">
+        <!-- Card de Cliente 1 -->
+        <div class="col-10 col-sm-8 col-md-4 col-lg-3">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="position-relative">
 
-                            <img class="card-img-top"
-                                 src="@cli.RotaImgCliente"
-                                 alt="Foto do cliente" />
+                    <img class="card-img-top"
+                         src="https://via.placeholder.com/300"
+                         alt="Foto do cliente" />
 
-                            <!-- faixa do título -->
-                            <div class="titulo-faixa">
-                                @cli.NomeCliente
-                            </div>
-
-                        </div>
-
-                        <div class="card-body text-center">
-
-                            <div class="btn-group w-100 btn-soft-group">
-
-                                <NavLink href=$"restaurante/editar-cliente/{cli.Id}"
-                                         class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1">
-                                    <i class="bi bi-pencil-square"></i>
-                                </NavLink>
-
-                                <NavLink href=$"restaurante/detalhes-cliente/{cli.Id}"
-                                         class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1">
-                                    <i class="bi bi-eye"></i>
-                                </NavLink>
-
-                                <button class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1"
-                                        @onclick="() => DeletarCliente(cli.Id)">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-
-                            </div>
-
-                        </div>
+                    <div class="titulo-faixa">
+                        Nome do Cliente
                     </div>
+
                 </div>
-            }
-        }
-        else
-        {
-            <div class="text-center mt-4">
-                <p class="text-muted">Nenhum cliente encontrado...</p>
+
+                <div class="card-body text-center">
+
+                    <div class="btn-group w-100 btn-soft-group">
+
+                        <NavLink href="restaurante/editar-cliente/1"
+                                 class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1">
+                            <i class="bi bi-pencil-square"></i>
+                        </NavLink>
+
+                        <NavLink href="restaurante/detalhes-cliente/1"
+                                 class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1">
+                            <i class="bi bi-eye"></i>
+                        </NavLink>
+
+                        <button class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1">
+                            <i class="bi bi-trash"></i>
+                        </button>
+
+                    </div>
+
+                </div>
             </div>
-        }
+        </div>
+
+        <!-- Exemplo de mensagem quando não houver clientes -->
+        <!--
+        <div class="text-center mt-4">
+            <p class="text-muted">Nenhum cliente encontrado...</p>
+        </div>
+        -->
 
     </div>
 
 </div>
 
-@code {
-
-    // Campo da busca
-    private string filtro = "";
-
-    // Lista completa
-    private List<Cliente> clientes = new();
-
-    // Lista filtrada
-    private IEnumerable<Cliente> clientesFiltrados => string.IsNullOrWhiteSpace(filtro)
-        ? clientes
-        : clientes.Where(c =>
-            c.NomeCliente.Contains(filtro, StringComparison.OrdinalIgnoreCase)
-        );
-
-    protected override Task OnInitializedAsync()
-    {
-        // mock de teste
-        clientes = new()
-        {
-            new Cliente
-            {
-                Id = 1,
-                NomeCliente = "Lucas",
-                TelefoneCliente = "99999-9999",
-                RotaImgCliente = "https://i.pinimg.com/1200x/ad/e1/d6/ade1d6153ed93021bc1916905ca7313c.jpg"
-            },
-
-            new Cliente
-            {
-                Id = 2,
-                NomeCliente = "Maria",
-                TelefoneCliente = "98888-7777",
-                RotaImgCliente = "https://i.pinimg.com/736x/5c/24/83/5c24838fedd379170886a39c269c561e.jpg"
-            }
-        };
-
-        return Task.CompletedTask;
-    }
-
-    private void AplicarFiltro()
-    {
-       
-    }
-
-    private void DeletarCliente(int id)
-    {
-        var cli = clientes.FirstOrDefault(c => c.Id == id);
-        if (cli != null)
-            clientes.Remove(cli);
-    }
-
-    public class Cliente
-    {
-        public int Id { get; set; }
-        public string NomeCliente { get; set; }
-        public string TelefoneCliente { get; set; }
-        public string RotaImgCliente { get; set; }
-    }
-
-}

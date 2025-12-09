@@ -1,135 +1,120 @@
 ﻿@page "/restaurante/cadastrar-restaurante"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
+@using RedRidersNew.Models
+@inject RestauranteDAO restauranteDAO
+@inject NavigationManager Navigation
 @layout MainLayoutRestaurante
 
-<PageTitle> Cadastrar Restaurante </PageTitle>
+<PageTitle>Cadastro de Restaurante</PageTitle>
+
+@if (!string.IsNullOrEmpty(erro))
+{
+    <div class="alert alert-danger">@erro</div>
+}
 
 <div class="container py-4">
-    <NavBarRestaurante/>
+    <NavBarRestaurante />
 
-    <EditForm Model="@restaurante" OnValidSubmit="CadastrarRestaurante" class="card p-4 mb-4 shadow-sm">
-
+    <EditForm Model="_novoRestaurante" OnValidSubmit="Salvar" FormName="CadastroRestaurante" class="card p-4 mb-4 shadow-sm">
         <DataAnnotationsValidator />
         <ValidationSummary />
 
         <h4 class="mb-3 fw-semibold border-bottom pb-2">Cadastro de Restaurante</h4>
 
         <div class="row g-3">
-
-            <!-- Nome do Estabelecimento -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Nome do Estabelecimento</label>
-                <InputText class="form-control" @bind-Value="restaurante.NomeEstabelecimento" />
-            </div>
-
-            <!-- Telefone -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Telefone</label>
-                <InputText class="form-control" @bind-Value="restaurante.TelefoneEstabelecimento" />
-            </div>
-
-            <!-- CNPJ -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">CNPJ</label>
-                <InputText class="form-control" @bind-Value="restaurante.CnpjEstabelecimento" />
-            </div>
-
-            <!-- Tipo de Negócio -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Tipo de Negócio</label>
-                <InputText class="form-control" @bind-Value="restaurante.TipoNegocioEstabelecimento" />
-            </div>
-
-            <!-- Imagem do Estabelecimento -->
             <div class="col-md-12">
-                <label class="form-label fw-semibold">URL da Imagem do Estabelecimento</label>
-                <InputText class="form-control" @bind-Value="restaurante.RotaImgEstabelecimento" />
+                <label class="form-label fw-semibold">Nome Fantasia</label>
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Nome_Fantasia_Restaurante" />
             </div>
 
-            <!-- CEP do Estabelecimento -->
-            <div class="col-md-6">
+            <div class="col-md-12">
+                <label class="form-label fw-semibold">Razão Social</label>
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Razao_Social_Restaurante" />
+            </div>
+
+            <div class="col-md-12">
+                <label class="form-label fw-semibold">Imagem</label>
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Imagem_Restaurante" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">CNPJ</label>
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Cnpj_Restaurante" />
+            </div>
+
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">CEP</label>
-                <InputText class="form-control" @bind-Value="restaurante.CEPEstabelecimento" />
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Cep_Restaurante" />
             </div>
 
-            <!-- Rua do Estabelecimento -->
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">Rua</label>
-                <InputText class="form-control" @bind-Value="restaurante.RuaEstabelecimento" />
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Rua_Restaurante" />
             </div>
 
-            <!-- Numero do Estabeleciemto -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Numero do Estabelecimento</label>
-                <InputText class="form-control" @bind-Value="restaurante.NumeroEstabelecimento" />
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">Número</label>
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Numero_Restaurante" />
             </div>
 
-            <!-- Complemento do Estabelecimento. Opcional -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Complemento do Estabelecimento</label>
-                <InputText class="form-control" @bind-Value="restaurante.ComplementoEstabelecimento" />
+            <div class="col-md-9">
+                <label class="form-label fw-semibold">Complemento</label>
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Complemento_Restaurante" />
             </div>
 
-            <!-- Bairro do Estabelecimento -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Bairro do Estabelecimento</label>
-                <InputText class="form-control" @bind-Value="restaurante.BairroEstabelecimento" />
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Bairro</label>
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Bairro_Restaurante" />
             </div>
 
-            <!-- Cidade do Estabelecimento -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Cidade do Estabelecimento</label>
-                <InputText class="form-control" @bind-Value="restaurante.CidadeEstabelecimento" />
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Cidade</label>
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Cidade_Restaurante" />
             </div>
 
-            <!-- Estado do Estabelecimento -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Estado do Estabelecimento</label>
-                <InputText class="form-control" @bind-Value="restaurante.EstadoEstabelecimento" />
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Estado</label>
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Estado_Restaurante" />
             </div>
 
-            <!-- Ponto de Referência do Estabelecimento. Opcional -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Ponto de Referência do Estabelecimento</label>
-                <InputText class="form-control" @bind-Value="restaurante.PontoReferenciaEstabelecimento" />
+            <div class="col-md-12">
+                <label class="form-label fw-semibold">Ponto de Referência</label>
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Ponto_De_Referencia_Restaurante" />
             </div>
 
+            <div class="col-md-9">
+                <label class="form-label fw-semibold">Nome do Dono</label>
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Nome_Do_Dono_Restaurante" />
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">CPF do Dono</label>
+                <InputText class="form-control" @bind-Value="_novoRestaurante.Cpf_Do_Dono_Restaurante" />
+            </div>
         </div>
 
         <div class="mt-4 text-end">
-            <button class="btn btn-soft-primary px-4">Cadastrar</button>
+            <button type="submit" class="btn btn-soft-primary px-4">Cadastrar</button>
         </div>
-
     </EditForm>
-
 </div>
 
 @code {
-    private Restaurante restaurante = new();
+    private string? erro = null;
+    private Restaurante _novoRestaurante = new Restaurante(); // Garantindo que nunca é nulo
 
-    private void CadastrarRestaurante()
+    private void Salvar()
     {
+        try
+        {
+            restauranteDAO.CadastrarRestaurante(_novoRestaurante);
 
-    }
-
-    public class Restaurante
-    {
-        // dados gerais
-        public string NomeEstabelecimento { get; set; }
-        public string TelefoneEstabelecimento { get; set; }
-        public string RotaImgEstabelecimento { get; set; }
-        public string RazaoSocialEstabelecimento { get; set; }
-        public string CnpjEstabelecimento { get; set; }
-        public string TipoNegocioEstabelecimento { get; set; }
-
-        // endereco
-        public string CEPEstabelecimento { get; set; }
-        public string RuaEstabelecimento { get; set; }
-        public string NumeroEstabelecimento { get; set; }
-        public string ComplementoEstabelecimento { get; set; }
-        public string BairroEstabelecimento { get; set; }
-        public string CidadeEstabelecimento { get; set; }
-        public string EstadoEstabelecimento { get; set; }
-        public string PontoReferenciaEstabelecimento { get; set; }
+            _novoRestaurante = new Restaurante(); // limpa formulário
+            Navigation.NavigateTo("/restaurante/gerenciar-restaurantes");
+        }
+        catch (Exception ex)
+        {
+            erro = ex.Message;
+        }
     }
 }

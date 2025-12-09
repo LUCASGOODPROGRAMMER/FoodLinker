@@ -12,9 +12,9 @@
     <section class="mb-4">
         <div class="search-box">
             <input type="text"
-                   placeholder="Pesquisar cliente..."
-                   @bind="filtro" />
-            <button class="btn-search" @onclick="AplicarFiltro">Buscar</button>
+                   placeholder="Pesquisar cliente..." />
+
+            <button class="btn-search">Buscar</button>
         </div>
     </section>
 
@@ -34,102 +34,59 @@
 
             <tbody>
 
-                @if (clientesFiltrados.Any())
-                {
-                    @foreach (var c in clientesFiltrados)
-                    {
-                        <tr>
-                            <td>
-                                <img src="@c.RotaImgCliente"
-                                     alt="Foto do cliente" />
-                            </td>
+                <!-- Exemplo de cliente 1 -->
+                <tr>
+                    <td>
+                        <img src="https://via.placeholder.com/60"
+                             alt="Foto do cliente" />
+                    </td>
 
-                            <td>@c.NomeCliente</td>
+                    <td>Pessoa 1</td>
 
-                            <td>
-                                <a href="tel:@c.TelefoneCliente">
-                                    @c.TelefoneCliente
-                                </a>
-                            </td>
+                    <td>
+                        <a href="tel:11999999999">(11) 99999-9999</a>
+                    </td>
 
-                            <td>@c.EnderecoCompleto</td>
+                    <td>Rua das Flores, 123 — Centro</td>
 
-                            <td>@c.DistanciaKm km</td>
+                    <td>1.4 km</td>
 
-                            <td>@c.FormasPagamento</td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="6" class="text-center text-muted py-3">
-                            Nenhum cliente encontrado...
-                        </td>
-                    </tr>
-                }
+                    <td>Dinheiro, Cartão, Pix</td>
+                </tr>
+
+                <!-- Exemplo de cliente 2 -->
+                <tr>
+                    <td>
+                        <img src="https://via.placeholder.com/60"
+                             alt="Foto do cliente" />
+                    </td>
+
+                    <td>Pessoa 2</td>
+
+                    <td>
+                        <a href="tel:XXXXXXXXXXX">(XX) XXXXX-XXXX</a>
+                    </td>
+
+                    <td>Endereço Completo</td>
+
+                    <td>0 km</td>
+
+                    <td>Cartão, Pix</td>
+                </tr>
+
+                <!-- Mensagem caso não haja clientes -->
+                <!--
+                <tr>
+                    <td colspan="6" class="text-center text-muted py-3">
+                        Nenhum cliente encontrado...
+                    </td>
+                </tr>
+                -->
 
             </tbody>
         </table>
-
     </div>
+
 </div>
 
-@code {
 
-    private string filtro = "";
-
-    private List<Cliente> clientes = new();
-
-    private IEnumerable<Cliente> clientesFiltrados =>
-        string.IsNullOrWhiteSpace(filtro)
-        ? clientes
-        : clientes.Where(c => c.NomeCliente.Contains(filtro, StringComparison.OrdinalIgnoreCase));
-
-    protected override Task OnInitializedAsync()
-    {
-        // mock de teste
-        clientes = new()
-        {
-            new Cliente
-            {
-                Id = 1,
-                NomeCliente = "Pessoa 1",
-                TelefoneCliente = "(11) 99999-9999",
-                RotaImgCliente = "https://i.pinimg.com/originals/b7/2b/89/b72b890d59ca695c572226b1df368a82.gif",
-                EnderecoCompleto = "Rua das Flores, 123 — Centro",
-                DistanciaKm = 1.4m,
-                FormasPagamento = "Dinheiro, Cartão, Pix"
-            },
-            new Cliente
-            {
-                Id = 2,
-                NomeCliente = "Pessoa 2",
-                TelefoneCliente = "(XX) XXXXX-XXXX",
-                RotaImgCliente = "https://i.pinimg.com/736x/9e/e0/50/9ee050dea422db719e71fe3ee9fef6b2.jpg",
-                EnderecoCompleto = "Endereço completo",
-                DistanciaKm = 0m,
-                FormasPagamento = "Cartão, Pix"
-            }
-        };
-
-        return Task.CompletedTask;
-    }
-
-    private void AplicarFiltro()
-    {
-        
-    }
-
-    public class Cliente
-    {
-        public int Id { get; set; }
-        public string NomeCliente { get; set; }
-        public string TelefoneCliente { get; set; }
-        public string RotaImgCliente { get; set; }
-        public string EnderecoCompleto { get; set; }
-        public decimal DistanciaKm { get; set; }
-        public string FormasPagamento { get; set; }
-    }
-
-}

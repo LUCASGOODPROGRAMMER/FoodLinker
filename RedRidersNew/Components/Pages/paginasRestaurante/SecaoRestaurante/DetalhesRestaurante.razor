@@ -1,15 +1,13 @@
-﻿@page "/restaurante/detalhes-restaurante/{id:int}"
+﻿@page "/restaurante/detalhes-restaurante"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @layout MainLayoutRestaurante
-
-@inject NavigationManager Nav
 
 <PageTitle>Detalhes do Restaurante</PageTitle>
 
 <div class="container py-4">
     <NavBarRestaurante />
 
-    <img src="@restaurante.RotaImgEstabelecimento"
+    <img src="https://i.pinimg.com/474x/01/37/6c/01376c4055b212aae29cbffef1ae019b.jpg"
          alt="Imagem do Restaurante"
          class="img-fluid banner-img shadow-sm mb-4" />
 
@@ -19,106 +17,93 @@
 
         <div class="row g-3">
 
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Nome do Estabelecimento</label>
-                <InputText class="form-control" @bind-Value="restaurante.NomeEstabelecimento" />
-            </div>
-
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Telefone</label>
-                <InputText class="form-control" @bind-Value="restaurante.TelefoneEstabelecimento" />
-            </div>
-
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">CNPJ</label>
-                <InputText class="form-control" @bind-Value="restaurante.CnpjEstabelecimento" />
-            </div>
-
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Tipo de Negócio</label>
-                <InputText class="form-control" @bind-Value="restaurante.TipoNegocioEstabelecimento" />
-            </div>
-
+                        <!-- Nome Fantasia -->
             <div class="col-md-12">
-                <label class="form-label fw-semibold">URL da Imagem do Estabelecimento</label>
-                <InputText class="form-control" @bind-Value="restaurante.RotaImgEstabelecimento" />
+                <label class="form-label fw-semibold">Nome Fantasia</label>
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Razão Social -->
+            <div class="col-md-12">
+                <label class="form-label fw-semibold">Razão Social</label>
+                <input class="form-control" />
+            </div>
+
+            <!-- Imagem do Restaurante -->
+            <div class="col-md-12">
+                <label class="form-label fw-semibold">Imagem</label>
+                <input class="form-control" />
+            </div>
+
+
+            <!-- CNPJ -->
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">CNPJ</label>
+                <input class="form-control" />
+            </div>
+
+
+            <!-- CEP do Restaurante -->
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">CEP</label>
-                <InputText class="form-control" @bind-Value="restaurante.CEPEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Rua do Restaurante -->
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">Rua</label>
-                <InputText class="form-control" @bind-Value="restaurante.RuaEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Numero -->
+            <div class="col-md-3">
                 <label class="form-label fw-semibold">Número</label>
-                <InputText class="form-control" @bind-Value="restaurante.NumeroEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Complemento -->
+            <div class="col-md-9">
                 <label class="form-label fw-semibold">Complemento</label>
-                <InputText class="form-control" @bind-Value="restaurante.ComplementoEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Bairro -->
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">Bairro</label>
-                <InputText class="form-control" @bind-Value="restaurante.BairroEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Cidade -->
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">Cidade</label>
-                <InputText class="form-control" @bind-Value="restaurante.CidadeEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Estado -->
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">Estado</label>
-                <InputText class="form-control" @bind-Value="restaurante.EstadoEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Ponto de Referência -->
+            <div class="col-md-12">
                 <label class="form-label fw-semibold">Ponto de Referência</label>
-                <InputText class="form-control" @bind-Value="restaurante.PontoReferenciaEstabelecimento" />
+                <input class="form-control" />
+            </div>
+
+            <!-- Nome do Dono -->
+            <div class="col-md-9">
+                <label class="form-label fw-semibold">Nome do Dono</label>
+                <input class="form-control" />
+            </div>
+
+            <!-- CPF do Dono -->
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">CPF do Dono</label>
+                <input class="form-control" />
             </div>
 
         </div>
 
     </div>
 </div>
-
-@code {
-    [Parameter]
-    public int id { get; set; }
-
-    private RestauranteModel restaurante = new();
-
-    protected override async Task OnInitializedAsync()
-    {
-    }
-
-    private void IrParaEdicao()
-    {
-        Nav.NavigateTo("/restaurante/editar-restaurante");
-    }
-
-    public class RestauranteModel
-    {
-        public string NomeEstabelecimento { get; set; }
-        public string TelefoneEstabelecimento { get; set; }
-        public string RotaImgEstabelecimento { get; set; }
-        public string RazaoSocialEstabelecimento { get; set; }
-        public string CnpjEstabelecimento { get; set; }
-        public string TipoNegocioEstabelecimento { get; set; }
-        public string CEPEstabelecimento { get; set; }
-        public string RuaEstabelecimento { get; set; }
-        public string NumeroEstabelecimento { get; set; }
-        public string ComplementoEstabelecimento { get; set; }
-        public string BairroEstabelecimento { get; set; }
-        public string CidadeEstabelecimento { get; set; }
-        public string EstadoEstabelecimento { get; set; }
-        public string PontoReferenciaEstabelecimento { get; set; }
-    }
-}

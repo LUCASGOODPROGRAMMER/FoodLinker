@@ -23,4 +23,8 @@
     <Content Include="Components\Pages\paginasRestaurante\SecaoCliente\MeusClientes.razor.css" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="9.5.0" />
+  </ItemGroup>
+
 </Project>

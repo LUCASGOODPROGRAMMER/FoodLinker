@@ -1,5 +1,8 @@
 @page "/restaurante/gerenciar-restaurantes"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
+@using RedRidersNew.Models
+@inject RestauranteDAO restauranteDAO
+
 @layout MainLayoutRestaurante
 
 <PageTitle>Gerenciar Restaurantes</PageTitle>
@@ -11,53 +14,74 @@
         <div class="search-box">
             <input type="text" placeholder="Pesquisar restaurante..." />
             <button class="btn-search">Buscar</button>
-            <NavLink href="restaurante/cadastrar-restaurante" class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2">
+
+            <NavLink 
+                href="restaurante/cadastrar-restaurante" 
+                class="btn btn-primary px-4 py-2 d-flex align-items-center gap-2">
                 <i class="bi bi-plus-circle"></i>
             </NavLink>
         </div>
     </section>
 
-    @* simulação de busca *@
     <div class="container py-4">
-
         <div class="row g-4">
-            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                <!-- CARD 1 -->
-                <div class="card shadow-sm border-0 h-100">
-                    <div class="position-relative">
 
-                        <img class="card-img-top"
-                             src="https://i.pinimg.com/originals/43/1c/e5/431ce5d15aab86f66a91ec9a07c9114f.gif"
-                             alt="Restaurante" />
+    @foreach (var item in listaRestaurantes)
+    {
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="card shadow-sm border-0 h-100">
 
-                        <!-- faixa do título -->
-                        <div class="titulo-faixa">
-                            restaurante 1
-                        </div>
+                <!-- Imagem -->
+                <div class="position-relative">
+                    <img 
+                        class="card-img-top"
+                        src="@item.Imagem_Restaurante"
+                        alt="@item.Nome_Fantasia_Restaurante" />
 
+                    <div class="titulo-faixa">
+                        @item.Nome_Fantasia_Restaurante
                     </div>
+                </div>
 
-                    <div class="card-body text-center">
+                <!-- Botões -->
+                <div class="card-body text-center">
+                    <div class="btn-group w-100 btn-soft-group">
 
-                        <div class="btn-group w-100 btn-soft-group">
-                            <NavLink href="restaurante/editar-restaurante" class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1">
-                                <i class="bi bi-pencil-square"></i>
-                            </NavLink>
+                        <NavLink 
+                            href=$"/restaurante/editar-restaurante/{item.Id_Restaurante}"
+                            class="btn btn-soft-primary d-flex align-items-center justify-content-center gap-1">
+                            <i class="bi bi-pencil-square"></i>
+                        </NavLink>
 
-                            <NavLink href="restaurante/detalhes-restaurante" class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1">
-                                <i class="bi bi-eye"></i>
-                            </NavLink>
+                        <NavLink 
+                            href=$"/restaurante/detalhes-restaurante/{item.Id_Restaurante}"
+                            class="btn btn-soft-neutral d-flex align-items-center justify-content-center gap-1">
+                            <i class="bi bi-eye"></i>
+                        </NavLink>
 
-                            <button class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </div>
+                        <button class="btn btn-soft-danger d-flex align-items-center justify-content-center gap-1">
+                            <i class="bi bi-trash"></i>
+                        </button>
 
                     </div>
                 </div>
+
             </div>
         </div>
+    }
+
+</div>
 
     </div>
 
 </div>
+
+@code {
+    private List<Restaurante> listaRestaurantes = new();
+
+    protected override void OnInitialized()
+    {
+        listaRestaurantes = restauranteDAO.ListarRestaurantes();
+    }
+}
+

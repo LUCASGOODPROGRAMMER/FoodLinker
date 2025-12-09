@@ -1,10 +1,15 @@
 using RedRidersNew.Components;
+using RedRidersNew.Configs;
+using RedRidersNew.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddSingleton<Conexao>();
+builder.Services.AddSingleton<RestauranteDAO>();
 
 var app = builder.Build();
 
@@ -25,3 +30,5 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.Run();
+
+

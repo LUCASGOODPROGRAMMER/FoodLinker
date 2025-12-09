@@ -1,4 +1,4 @@
-﻿@page "/restaurante/editar-restaurante/{id:int}"
+﻿@page "/restaurante/editar-restaurante"
 @using RedRidersNew.Components.Layout.LayoutRestaurante
 @layout MainLayoutRestaurante
 
@@ -7,84 +7,96 @@
 <div class="container py-4">
     <NavBarRestaurante />
 
-    <EditForm Model="@restaurante" OnValidSubmit="SalvarAlteracoes" class="card p-4 mb-4 shadow-sm">
-
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    <div class="card p-4 mb-4 shadow-sm">
 
         <h4 class="mb-3 fw-semibold border-bottom pb-2">Editar Restaurante</h4>
 
         <div class="row g-3">
 
-            <!-- Nome do Estabelecimento -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Nome do Estabelecimento</label>
-                <InputText class="form-control" @bind-Value="restaurante.NomeEstabelecimento" />
+                        <!-- Nome Fantasia -->
+            <div class="col-md-12">
+                <label class="form-label fw-semibold">Nome Fantasia</label>
+                <input class="form-control" />
             </div>
 
-            <!-- Telefone -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Telefone</label>
-                <InputText class="form-control" @bind-Value="restaurante.TelefoneEstabelecimento" />
+            <!-- Razão Social -->
+            <div class="col-md-12">
+                <label class="form-label fw-semibold">Razão Social</label>
+                <input class="form-control" />
             </div>
+
+            <!-- Imagem do Restaurante -->
+            <div class="col-md-12">
+                <label class="form-label fw-semibold">Imagem</label>
+                <input class="form-control" />
+            </div>
+
 
             <!-- CNPJ -->
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">CNPJ</label>
-                <InputText class="form-control" @bind-Value="restaurante.CnpjEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <!-- Tipo de Negócio -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">Tipo de Negócio</label>
-                <InputText class="form-control" @bind-Value="restaurante.TipoNegocioEstabelecimento" />
-            </div>
 
-            <!-- Imagem -->
-            <div class="col-md-12">
-                <label class="form-label fw-semibold">URL da Imagem do Estabelecimento</label>
-                <InputText class="form-control" @bind-Value="restaurante.RotaImgEstabelecimento" />
-            </div>
-
-            <!-- Endereço -->
-            <div class="col-md-6">
+            <!-- CEP do Restaurante -->
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">CEP</label>
-                <InputText class="form-control" @bind-Value="restaurante.CEPEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Rua do Restaurante -->
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">Rua</label>
-                <InputText class="form-control" @bind-Value="restaurante.RuaEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Numero -->
+            <div class="col-md-3">
                 <label class="form-label fw-semibold">Número</label>
-                <InputText class="form-control" @bind-Value="restaurante.NumeroEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Complemento -->
+            <div class="col-md-9">
                 <label class="form-label fw-semibold">Complemento</label>
-                <InputText class="form-control" @bind-Value="restaurante.ComplementoEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Bairro -->
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">Bairro</label>
-                <InputText class="form-control" @bind-Value="restaurante.BairroEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Cidade -->
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">Cidade</label>
-                <InputText class="form-control" @bind-Value="restaurante.CidadeEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Estado -->
+            <div class="col-md-4">
                 <label class="form-label fw-semibold">Estado</label>
-                <InputText class="form-control" @bind-Value="restaurante.EstadoEstabelecimento" />
+                <input class="form-control" />
             </div>
 
-            <div class="col-md-6">
+            <!-- Ponto de Referência -->
+            <div class="col-md-12">
                 <label class="form-label fw-semibold">Ponto de Referência</label>
-                <InputText class="form-control" @bind-Value="restaurante.PontoReferenciaEstabelecimento" />
+                <input class="form-control" />
+            </div>
+
+            <!-- Nome do Dono -->
+            <div class="col-md-9">
+                <label class="form-label fw-semibold">Nome do Dono</label>
+                <input class="form-control" />
+            </div>
+
+            <!-- CPF do Dono -->
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">CPF do Dono</label>
+                <input class="form-control" />
             </div>
 
         </div>
@@ -92,7 +104,7 @@
         <div class="mt-4 d-flex justify-content-between">
 
             <!-- Botão Cancelar -->
-            <button type="button" class="btn btn-soft-danger px-4" @onclick="Cancelar">
+            <button type="button" class="btn btn-soft-danger px-4">
                 Cancelar
             </button>
 
@@ -103,42 +115,6 @@
 
         </div>
 
-    </EditForm>
+    </div>
 
 </div>
-
-@code {
-    [Parameter]
-    public int id { get; set; }
-
-    private CadastroRestaurante restaurante = new();
-
-    private void SalvarAlteracoes()
-    {
-        // lógica de salvar edição
-    }
-
-    private void Cancelar()
-    {
-        // navegação para outra página ou voltar
-    }
-
-    public class CadastroRestaurante
-    {
-        public string NomeEstabelecimento { get; set; }
-        public string TelefoneEstabelecimento { get; set; }
-        public string RotaImgEstabelecimento { get; set; }
-        public string RazaoSocialEstabelecimento { get; set; }
-        public string CnpjEstabelecimento { get; set; }
-        public string TipoNegocioEstabelecimento { get; set; }
-
-        public string CEPEstabelecimento { get; set; }
-        public string RuaEstabelecimento { get; set; }
-        public string NumeroEstabelecimento { get; set; }
-        public string ComplementoEstabelecimento { get; set; }
-        public string BairroEstabelecimento { get; set; }
-        public string CidadeEstabelecimento { get; set; }
-        public string EstadoEstabelecimento { get; set; }
-        public string PontoReferenciaEstabelecimento { get; set; }
-    }
-}

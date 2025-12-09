@@ -7,10 +7,7 @@
 <div class="container py-4">
     <NavBarClientes />
 
-    <EditForm Model="@cliente" OnValidSubmit="CadastrarCliente" class="card p-4 mb-4 shadow-sm">
-
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    <div class="card p-4 mb-4 shadow-sm">
 
         <h4 class="mb-3 fw-semibold border-bottom pb-2">Cadastro de Cliente</h4>
 
@@ -19,31 +16,19 @@
             <!-- Nome -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">Nome do Cliente</label>
-                <InputText class="form-control" @bind-Value="cliente.NomeCliente" />
+                <input class="form-control" />
             </div>
 
             <!-- Telefone -->
             <div class="col-md-6">
                 <label class="form-label fw-semibold">Telefone</label>
-                <InputText class="form-control" @bind-Value="cliente.TelefoneCliente" />
-            </div>
-
-            <!-- CPF -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">CPF</label>
-                <InputText class="form-control" @bind-Value="cliente.CpfCliente" />
-            </div>
-
-            <!-- RG -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">RG</label>
-                <InputText class="form-control" @bind-Value="cliente.RgCliente" />
+                <input class="form-control" />
             </div>
 
             <!-- Imagem -->
             <div class="col-md-12">
                 <label class="form-label fw-semibold">URL da Imagem</label>
-                <InputText class="form-control" @bind-Value="cliente.RotaImgCliente" />
+                <input class="form-control" />
             </div>
 
             <h5 class="mt-4 fw-semibold border-bottom pb-2">Endereço</h5>
@@ -51,49 +36,49 @@
             <!-- CEP -->
             <div class="col-md-4">
                 <label class="form-label fw-semibold">CEP</label>
-                <InputText class="form-control" @bind-Value="cliente.CEPCliente" />
+                <input class="form-control" />
             </div>
 
             <!-- Rua -->
             <div class="col-md-8">
                 <label class="form-label fw-semibold">Rua</label>
-                <InputText class="form-control" @bind-Value="cliente.RuaCliente" />
+                <input class="form-control" />
             </div>
 
             <!-- Número -->
             <div class="col-md-3">
                 <label class="form-label fw-semibold">Número</label>
-                <InputText class="form-control" @bind-Value="cliente.NumeroCliente" />
+                <input class="form-control" />
             </div>
 
             <!-- Complemento -->
             <div class="col-md-9">
                 <label class="form-label fw-semibold">Complemento</label>
-                <InputText class="form-control" @bind-Value="cliente.ComplementoCliente" />
+                <input class="form-control" />
             </div>
 
             <!-- Bairro -->
             <div class="col-md-4">
                 <label class="form-label fw-semibold">Bairro</label>
-                <InputText class="form-control" @bind-Value="cliente.BairroCliente" />
+                <input class="form-control" />
             </div>
 
             <!-- Cidade -->
             <div class="col-md-4">
                 <label class="form-label fw-semibold">Cidade</label>
-                <InputText class="form-control" @bind-Value="cliente.CidadeCliente" />
+                <input class="form-control" />
             </div>
 
             <!-- Estado -->
             <div class="col-md-4">
                 <label class="form-label fw-semibold">Estado</label>
-                <InputText class="form-control" @bind-Value="cliente.EstadoCliente" />
+                <input class="form-control" />
             </div>
 
             <!-- Referência -->
             <div class="col-12">
                 <label class="form-label fw-semibold">Ponto de Referência</label>
-                <InputText class="form-control" @bind-Value="cliente.PontoReferenciaCliente" />
+                <input class="form-control" />
             </div>
 
         </div>
@@ -102,37 +87,6 @@
             <button class="btn btn-soft-primary px-4">Cadastrar</button>
         </div>
 
-    </EditForm>
+    </div>
 
 </div>
-
-@code {
-
-    private Cliente cliente = new();
-
-    private void CadastrarCliente()
-    {
-        
-    }
-
-    public class Cliente
-    {
-        // dados gerais
-        public string NomeCliente { get; set; }
-        public string TelefoneCliente { get; set; }
-        public string CpfCliente { get; set; }
-        public string RgCliente { get; set; }
-        public string RotaImgCliente { get; set; }
-
-        // endereço
-        public string CEPCliente { get; set; }
-        public string RuaCliente { get; set; }
-        public string NumeroCliente { get; set; }
-        public string ComplementoCliente { get; set; }
-        public string BairroCliente { get; set; }
-        public string CidadeCliente { get; set; }
-        public string EstadoCliente { get; set; }
-        public string PontoReferenciaCliente { get; set; }
-    }
-
-}
